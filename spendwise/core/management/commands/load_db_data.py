@@ -19,7 +19,8 @@ class Command(BaseCommand):
             "Debt Payment",
             "Personal Spending",
             "Entertainment",
-            "Miscellaneous"
+            "Miscellaneous",
+            "Other"
         )
 
         for name in categories_names:
