@@ -1,4 +1,6 @@
 from django.core.management.base import BaseCommand
+from django.db import IntegrityError
+from django.contrib.auth import get_user_model
 
 from spendwise.core.models import Category
 
@@ -6,7 +8,18 @@ from spendwise.core.models import Category
 class Command(BaseCommand):
     help = "Creates categories"
 
-    def handle(self, *args, **kwargs):
+    def create_superuser(self):
+        User = get_user_model()
+        try:
+            User.objects.create_superuser(
+                username="admin",
+                password="spendwiseadmin@2024"
+            )
+            self.stdout.write(self.style.SUCCESS("Superuser created successfully"))
+        except IntegrityError:
+            self.stdout.write(self.style.WARNING("Superuser already created"))
+        
+    def create_categories(self):
         categories_names = (
             "Housing",
             "Transportation",
@@ -28,3 +41,7 @@ class Command(BaseCommand):
                 name=name
             )
         self.stdout.write(self.style.SUCCESS("Categories successfully created"))
+
+    def handle(self, *args, **kwargs):
+        self.create_categories()
+        self.create_superuser()
