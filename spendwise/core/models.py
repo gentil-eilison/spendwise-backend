@@ -22,6 +22,7 @@ class Expense(models.Model):
         default_currency="BRL"
     )
     description = models.CharField(max_length=128, verbose_name="Description")
+    category = models.ForeignKey(to=Category, on_delete=models.PROTECT, related_name="expenses", verbose_name="Category")
 
     class Meta:
         verbose_name = "Expense"
