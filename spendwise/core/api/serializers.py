@@ -10,6 +10,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ExpenseSerializer(serializers.ModelSerializer):
+    category = serializers.CharField(source="category.name")
+
     class Meta:
         model = Expense
         fields = ("id", "date", "value", "description", "category")

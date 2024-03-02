@@ -44,12 +44,14 @@ LOCAL_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    "djmoney"
+    "djmoney",
+    "corsheaders"
 ]
 
 INSTALLED_APPS += LOCAL_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -135,3 +137,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # django-money
 CURRENCIES = ("USD", "BRL")
 CURRENCY_CHOICES = [("USD", "$"), ("BRL", "R$")]
+
+# django-cors-headers
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000"
+]
