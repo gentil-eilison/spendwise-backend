@@ -1,7 +1,9 @@
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
+from django_filters import rest_framework as filters
 
 from .serializers import CategorySerializer, ExpenseSerializer
 from ..models import Category, Expense
+from .filters import ExpenseFilterSet
 
 
 class CategoryViewSet(ReadOnlyModelViewSet):
@@ -12,3 +14,5 @@ class CategoryViewSet(ReadOnlyModelViewSet):
 class ExpenseViewSet(ModelViewSet):
     serializer_class = ExpenseSerializer
     queryset = Expense.objects.all().select_related("category")
+    filter_backends = (filters.DjangoFilterBackend, )
+    filterset_class = ExpenseFilterSet
