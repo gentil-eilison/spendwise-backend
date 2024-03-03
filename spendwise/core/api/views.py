@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django_filters import rest_framework as filters
 
-from .serializers import CategorySerializer, ExpenseSerializer
+from .serializers import CategorySerializer, ExpenseSerializer, ExpenseReadSerializer
 from ..models import Category, Expense
 from .filters import ExpenseFilterSet
 
@@ -19,6 +19,14 @@ class ExpenseViewSet(ModelViewSet):
     queryset = Expense.objects.all().select_related("category")
     filter_backends = (filters.DjangoFilterBackend, )
     filterset_class = ExpenseFilterSet
+    
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return ExpenseReadSerializer
+        return ExpenseSerializer    
+
+    def get_queryset(self):
+        return super().get_queryset().order_by("-date")
 
     @action(("GET", ), detail=False, url_path="total-amount")
     def total_amount(self, request):
