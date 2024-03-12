@@ -26,7 +26,7 @@ class Command(BaseCommand):
             "Food",
             "Utilities",
             "Insurance",
-            "Medial & Healthcare",
+            "Medical & Healthcare",
             "Saving",
             "Investing",
             "Debt Payment",
