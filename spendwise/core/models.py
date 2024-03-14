@@ -1,8 +1,6 @@
 from django.db import models
 import djmoney.models.fields as djm_models
 
-from .managers import ExpenseQuerySet
-
 
 class Category(models.Model):
     name = models.CharField(max_length=256, verbose_name="Name")
@@ -25,8 +23,6 @@ class Expense(models.Model):
     )
     description = models.CharField(max_length=128, verbose_name="Description")
     category = models.ForeignKey(to=Category, on_delete=models.PROTECT, related_name="expenses", verbose_name="Category")
-
-    objects = ExpenseQuerySet.as_manager()
 
     class Meta:
         verbose_name = "Expense"
